@@ -1,0 +1,5 @@
+/target
+/.settings
+/flume-berkeley-db
+/.classpath
+/.project
