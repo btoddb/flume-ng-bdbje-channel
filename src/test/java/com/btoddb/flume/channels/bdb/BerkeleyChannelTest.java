@@ -4,6 +4,7 @@ package com.btoddb.flume.channels.bdb;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,16 +15,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.common.io.Files;
+
 public class BerkeleyChannelTest {
-//    private File dataDir;
+    private static final String BDB_DIR_HOME = "target/bdb-data";
 
     @Test
     public void test() {
         BerkeleyChannel channel = new BerkeleyChannel();
         channel.setName("junit");
+        channel.setDataDir(BDB_DIR_HOME);
         channel.setMaxChannelSize(1000);
         channel.setMaxPutWaitTime(1000);
-//        channel.setDataDir(dataDir.getAbsolutePath());
         channel.configure(null);
         channel.start();
 
@@ -57,17 +60,16 @@ public class BerkeleyChannelTest {
 
     @Before
     public void setup() throws Exception {
-//        dataDir = Files.createTempDir();
-//        System.out.println("dataDir = " + dataDir);
+        cleanup();
     }
 
     @After
     public void cleanup() throws Exception {
-//        try {
-//            Files.deleteRecursively(dataDir);
-//        }
-//        catch (Throwable e) {
-//            // ignore
-//        }
+        try {
+            Files.deleteRecursively(new File(BDB_DIR_HOME));
+        }
+        catch (Throwable e) {
+            // ignore
+        }
     }
 }

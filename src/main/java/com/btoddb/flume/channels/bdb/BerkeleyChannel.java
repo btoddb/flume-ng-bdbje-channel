@@ -33,7 +33,7 @@ public class BerkeleyChannel extends BasicChannelSemantics implements BerkeleyCh
     public static final String STAT_COMMITS = "commits";
 
     private static final String DEFAULT_TIMESTAMP_HEADER = "timestamp";
-    private static final String DEFAULT_DB_PATH = "flume-berkeley-channel";
+    private static final String DEFAULT_DB_PATH = "flume-berkeley-db";
     private static final long DEFAULT_MAX_CHANNEL_SIZE = 1000000;
     private static final long DEFAULT_MAX_PUT_WAIT_TIME = 1000;
 
@@ -41,7 +41,12 @@ public class BerkeleyChannel extends BasicChannelSemantics implements BerkeleyCh
     private JmxStatsHelper stats;
 
     private Environment dbEnv = null;
-    private File dataDir = new File("./flume-berkeley-db");
+    private File dataDir;
+
+    public String getTimestampHeader() {
+        return timestampHeader;
+    }
+
     private Database db = null;
     private String timestampHeader;
     private long maxChannelSize;
@@ -188,6 +193,14 @@ public class BerkeleyChannel extends BasicChannelSemantics implements BerkeleyCh
     @Override
     public void setMaxChannelSize(long maxChannelSize) {
         this.maxChannelSize = maxChannelSize;
+    }
+
+    public File getDataDir() {
+        return dataDir;
+    }
+
+    public void setDataDir(String dataDir) {
+        this.dataDir = new File(dataDir);
     }
 
 }
